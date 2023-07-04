@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const taskModel = require("../Model/taskModel");
+const authenticate = require("../Middleware/authentication");
 
 const taskRouter=Router();
 
-taskRouter.post("/create",async(req,res)=>{
+taskRouter.post("/create",authenticate, async(req,res)=>{
     const payload=req.body
    try {
        let task= new taskModel(payload);
@@ -18,12 +19,12 @@ taskRouter.get("/",async(req,res)=>{
     try {
         let data=taskModel.find();
         res.send(data)
-    } catch (error) {
-        res.send({"err":err.message,"msg":"something went wrong"})
+    } catch (err) {
+        res.send({"err":err.message,"msg":"something went wrong /"})
     }
 })
 
-taskRouter.delete("/delete/:id", async(req,res)=>{
+taskRouter.delete("/delete/:id",authenticate, async(req,res)=>{
     const ID=req.params.id;
 
     try {
@@ -34,7 +35,7 @@ taskRouter.delete("/delete/:id", async(req,res)=>{
     }
 })
 
-taskRouter.patch("/update/:id", async(req,res)=>{
+taskRouter.patch("/update/:id",authenticate, async(req,res)=>{
     const ID=req.params.id;
     const payload=req.body
     try {

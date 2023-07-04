@@ -1,4 +1,5 @@
 const express=require("express");
+const cors=require('cors')
 const userRouter = require("./Routers/userRouter");
 const taskRouter = require("./Routers/taskRouter");
 const Connection  = require("./db");
@@ -6,10 +7,10 @@ const authenticate = require("./Middleware/authentication");
 
 const app = express();
 app.use(express.json());
-
+app.use(cors())
 
 app.use("/user",userRouter)
-app.use(authenticate)
+ app.use(authenticate)
 app.use("/task",taskRouter)
 
 

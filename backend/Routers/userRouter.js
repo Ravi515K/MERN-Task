@@ -15,48 +15,74 @@ userRouter.get("/",async(req,res)=>{
 })
 
 userRouter.post("/register",async(req,res)=>{
-        const payload=req.body 
+        const {name,email,password,Role}=req.body 
       try {
-            
-            let user= new userModel(payload)
-            await  user.save();
+        bcrypt.hash(password, 5,async function(err, hash) {
+            // Store hash in your password DB.
+                if(err){
+                    res.send(err)
+                }else{
+                    let user= new userModel({
+                        name,
+                        email,
+                        password:hash,
+                        Role
+                    })
+                    await  user.save();
+                }
+        })
+          
             res.send("user register succesfully")
       } catch (err) {
         res.send(err.message)
       }
 })
 
+ // User Login
+
 userRouter.post("/login",async(req,res)=>{
-    console.log("req", req.body);
+    console.log("req", req.body.password);
     const { email, password } = req.body;
 
-    const checkUser = await userModel.findOne({
-        email: email,
-    })
-
-    const pass = checkUser.password;
-    bcrypt.compare(password, pass, function (err, result) {
-        //console.log('err:', err,result)
-        if (err) {
-             res.send("Please enter valid credentils");
-        }
-        else {
-            const token = jwt.sign(
-                {
-                    name: checkUser.name,
-                    email: checkUser.email,
-                    password: password,
-                },
-                "SECRET"
-            )
-            let payload = {
-                "_id": checkUser._id,
-                "name": checkUser.name,
-                "token": token
+    try{
+            const checkUser = await userModel.find({email:email})
+            const pass = checkUser[0].password;
+                    //  console.log("checobj",checkUser)
+            if(checkUser.length>0){
+                bcrypt.compare(password, pass,  (err, result) =>{
+                    if (err) {
+                         res.send("Please enter valid credentils");
+                    }
+                    else {
+                        const token = jwt.sign(
+                            {
+                                name: checkUser[0].name,
+                                email: checkUser[0].email,
+                                password: password,
+                            },
+                            "SECRET"
+                        )
+                        let p = {
+                            "_id": checkUser[0]._id,
+                            "name": checkUser[0].name,
+                            "token": token
+                        }
+                         res.send(p);
+                         
+                    }
+                });
+            }else{
+                res.send({"masg":"WrongCredential"})
+                
             }
-             res.send(payload);
-        }
-    });
+           
+        
+    }catch(err)
+    {
+        res.send({"msg":"Please Enter valid Credentials","err":err.message})
+        console.log("wrong")
+    }
+   
 })
 
 module.exports=userRouter
