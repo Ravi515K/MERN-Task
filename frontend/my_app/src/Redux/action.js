@@ -34,6 +34,7 @@ export const taskDelete = (data)=>(dispatch)=>{
     })
     .then(res => {
         console.log(res)
+        window.location.reload()
          dispatch({type:types.Task_Delete_Data,payload:data._id});
       })
       .catch(error => {

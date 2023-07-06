@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom';
+import UpadateTask from '../component/UpdateTask';
 
 const Home = () => {
   
@@ -16,6 +17,7 @@ const Home = () => {
  
   const handleEdit=(id)=>{
      navigate(`update/${id}`)
+  
   }
 
   const handleDelete=(data)=>{
@@ -29,6 +31,8 @@ const Home = () => {
     
 
   }, [])
+
+
   return (
     <div>
       <Navbar />
