@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Navbar from '../component/navbar'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const TaskCreate = () => {
     let data=JSON.parse(localStorage.getItem('user_detail'))
     console.log(data.token)
+    const navigate=useNavigate()
     const [task,setTask]=useState({})
    
     const handleChange=(e)=>{
@@ -29,6 +31,7 @@ const TaskCreate = () => {
            }).then((res)=>res.json())
            .then((res)=>{
                 console.log(res)
+                navigate("/")
            }).catch((err)=>{
             console.log(err)
            })

@@ -3,12 +3,14 @@ import Navbar from '../component/navbar'
 import axios from 'axios'
 import { taskUpdate } from '../Redux/action'
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import {  useNavigate, useParams } from 'react-router-dom'
 const UpadateTask = () => {
     const {id}=useParams()
     let data=JSON.parse(localStorage.getItem('user_detail'))
     console.log(data.token)
     const dispatch = useDispatch();
+    const navigate = useNavigate()
+    
     const [task,setTask]=useState({})
    
     const handleChange=(e)=>{
@@ -23,6 +25,7 @@ const UpadateTask = () => {
     const handleSubmit= (e)=>{
         e.preventDefault();
        dispatch(taskUpdate(id,task))
+        navigate('/')
     }
   return (
     <div>
@@ -32,22 +35,22 @@ const UpadateTask = () => {
         <form action=""  onSubmit={handleSubmit}>
             <div className="form-group ">
                 <label className="form-label" >Title</label>
-                <input className="form-control"  name="title"  onChange={handleChange} required />
+                <input className="form-control"  name="title"  onChange={handleChange}  />
                
             </div>
             <div className="form-group ">
                 <label className="form-label">Description</label>
-                <input className="form-control"  name="description"  onChange={handleChange} required />
+                <input className="form-control"  name="description"  onChange={handleChange}  />
                 
             </div>
             <div className="form-group ">
                 <label className="form-label" >Due Date</label>
-                <input className="form-control"  name="due_date"  onChange={handleChange} required />
+                <input className="form-control"  name="due_date"  onChange={handleChange}  />
                
             </div>
             <div className="form-group ">
                 <label className="form-label" >Status</label>
-                <input className="form-control"  name="status"  onChange={handleChange} required />
+                <input className="form-control"  name="status"  onChange={handleChange}  />
                 
             </div>
             <div className="form-group">

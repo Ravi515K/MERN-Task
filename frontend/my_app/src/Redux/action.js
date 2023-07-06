@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as types from './actionType'
 
+const token=JSON.parse(localStorage.getItem('user_detail'))
 export const AdminLogIn = ()=>(dispatch)=>{
      dispatch({type:types.Admin_Login})
 
@@ -23,9 +24,14 @@ export const getTaskData = ()=>(dispatch)=>{
 
 }
 
+
 export const taskDelete = (data)=>(dispatch)=>{
     console.log("data,action",data._id)
-    axios.delete(`http://localhost:8080/task/delete/${data._id}`)
+    axios.delete(`http://localhost:8080/task/delete/${data._id}`,{
+        headers:{
+            'Authorization':token.token
+        }
+    })
     .then(res => {
         console.log(res)
          dispatch({type:types.Task_Delete_Data,payload:data._id});
@@ -36,9 +42,17 @@ export const taskDelete = (data)=>(dispatch)=>{
 }
 
 export const taskUpdate = (id,data)=>(dispatch)=>{
-    axios.patch(`http://localhost:8080/task/update/${id}`,data)
+    console.log("update_data",id,data)
+    axios.patch(`http://localhost:8080/task/update/${id}`,data,{
+        
+        headers:{
+           
+            'Content-Type': 'application/json',
+            "Authorization":token.token,
+        }
+    })
     .then((res)=>{
-        console.log(`Update Task with ID ${id}`)
+        console.log(res)
         dispatch({type:types.Task_Update_Data,payload:res});
     }).catch((err)=>{
         console.log(err)

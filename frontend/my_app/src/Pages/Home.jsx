@@ -22,9 +22,11 @@ const Home = () => {
     
   //  console.log(data)
      dispatch(taskDelete(data))
+
   }
   useEffect(() => {
     dispatch(getTaskData())
+    
 
   }, [])
   return (
