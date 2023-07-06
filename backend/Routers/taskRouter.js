@@ -10,21 +10,22 @@ taskRouter.post("/create",authenticate, async(req,res)=>{
        let task= new taskModel(payload);
        await task.save();
        res.send("task Created")
-   } catch (error) {
+   } catch (err) {
      res.send({"err":err.message,"msg":"something went wrong"})
    }
 })
 
 taskRouter.get("/",async(req,res)=>{
     try {
-        let data=taskModel.find();
+        let data= await taskModel.find();
+        console.log(data,"data")
         res.send(data)
     } catch (err) {
         res.send({"err":err.message,"msg":"something went wrong /"})
     }
 })
 
-taskRouter.delete("/delete/:id",authenticate, async(req,res)=>{
+taskRouter.delete("/delete/:id", async(req,res)=>{
     const ID=req.params.id;
 
     try {
@@ -35,7 +36,7 @@ taskRouter.delete("/delete/:id",authenticate, async(req,res)=>{
     }
 })
 
-taskRouter.patch("/update/:id",authenticate, async(req,res)=>{
+taskRouter.patch("/update/:id", async(req,res)=>{
     const ID=req.params.id;
     const payload=req.body
     try {

@@ -65,6 +65,7 @@ userRouter.post("/login",async(req,res)=>{
                         let p = {
                             "_id": checkUser[0]._id,
                             "name": checkUser[0].name,
+                             "Role":checkUser[0].Role,
                             "token": token
                         }
                          res.send(p);
