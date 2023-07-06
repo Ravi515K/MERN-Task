@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import Navbar from '../component/navbar'
 import axios from 'axios'
-const TaskCreate = () => {
+import { taskUpdate } from '../Redux/action'
+import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
+const UpadateTask = () => {
+    const {id}=useParams()
     let data=JSON.parse(localStorage.getItem('user_detail'))
     console.log(data.token)
+    const dispatch = useDispatch();
     const [task,setTask]=useState({})
    
     const handleChange=(e)=>{
@@ -17,31 +22,13 @@ const TaskCreate = () => {
     
     const handleSubmit= (e)=>{
         e.preventDefault();
-        try {
-           fetch("http://localhost:8080/task/create",{
-            method:"POST",
-            headers:{
-                'Content-type':'application/json',
-                'Authorization':data.token
-            },
-            body:JSON.stringify(task)
-            
-           }).then((res)=>res.json())
-           .then((res)=>{
-                console.log(res)
-           }).catch((err)=>{
-            console.log(err)
-           })
-
-          } catch (error) {
-            console.error(error); 
-          }
+       dispatch(taskUpdate(id,task))
     }
   return (
     <div>
         <Navbar/>
         <div className="login">
-        <h1 className="text-center">Create Task</h1>
+        <h1 className="text-center">Update Task</h1>
         <form action=""  onSubmit={handleSubmit}>
             <div className="form-group ">
                 <label className="form-label" >Title</label>
@@ -74,11 +61,11 @@ const TaskCreate = () => {
                 </select>
             </div>
                 
-            <input type="submit" className="btn btn-success w-100" value={"CREATE"} />
+            <input type="submit" className="btn btn-success w-100" value={"UPDATE"} />
         </form>
     </div>
     </div>
   )
 }
 
-export default TaskCreate
+export default UpadateTask

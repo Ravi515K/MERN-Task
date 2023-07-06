@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../component/navbar'
-import { getTaskData, taskDelete } from '../Redux/action';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'
 import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBinLine } from 'react-icons/ri'
-import { useNavigate } from 'react-router-dom';
+import { getTaskData, taskDelete } from '../Redux/action';
+import { useSelector } from 'react-redux';
 
-const Home = () => {
-  
+const Userdashboard = () => {
   let task = useSelector((store) => store.task)
-    console.log(task)
- 
+  console.log(task)
   const dispatch = useDispatch()
-  const navigate=useNavigate()
- 
-  const handleEdit=(id)=>{
-     navigate(`update/${id}`)
+
+  const handleEdit = () => {
+
   }
 
-  const handleDelete=(data)=>{
-    
-  //  console.log(data)
-     dispatch(taskDelete(data))
+  const handleDelete = (data) => {
+
+    //  console.log(data)
+    dispatch(taskDelete(data))
   }
   useEffect(() => {
     dispatch(getTaskData())
@@ -30,12 +27,11 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <h1 className="text-center my-5">Home Page</h1>
-
+      <h1 className="text-center my-5">UserDashBoard</h1>
       <div id="table">
 
         <table class="table table-sm">
-          
+
           <thead>
             <tr className="table-warning">
               <th scope="col">Sr.No</th>
@@ -52,18 +48,18 @@ const Home = () => {
             {
               task?.map((el, i) => {
                 return (
-                  <tr key={el._id} class="table-success ">
-                  <th scope="row">{i+1}</th>
-                  <td>{el.title}</td>
-                  <td>{el.description}</td>
-                  <td>{el.due_date}</td>
-                  <td>{el.status}</td>
-                  <td>{el.assigned_user}</td>
-                  <td onClick={()=>handleEdit(el._id)}>{  <FaEdit />}</td>
-                  <td onClick={()=>handleDelete(el)}>{< RiDeleteBinLine />}</td>
-                </tr>
+                  <tr key={el.id} class="table-success ">
+                    <th scope="row">{i + 1}</th>
+                    <td>{el.title}</td>
+                    <td>{el.description}</td>
+                    <td>{el.due_date}</td>
+                    <td>{el.status}</td>
+                    <td>{el.assigned_user}</td>
+                    <td onClick={handleEdit(el)}>{<FaEdit />}</td>
+                    <td onClick={() => handleDelete(el)}>{< RiDeleteBinLine />}</td>
+                  </tr>
                 )
-                
+
               })
             }
 
@@ -71,7 +67,11 @@ const Home = () => {
           </tbody>
         </table>
       </div>
+
     </div>
+
+
   )
 }
-export default Home
+
+export default Userdashboard

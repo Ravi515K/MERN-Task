@@ -28,3 +28,12 @@
 .submit-btn:hover{
   background-color:brown;
 }
+
+#table{
+  width:80%;
+  margin: auto;
+
+}
+ /* tr th{
+  cursor: pointer;
+} */
