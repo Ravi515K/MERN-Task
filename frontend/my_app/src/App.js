@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Home/>}></Route>
         <Route path="/login" element={<UserLoginPage/>}></Route>
         <Route path="/task" element={ <RequiredAuth>  <TaskCreate /> </RequiredAuth> }></Route>
-        <Route path="/update/:id" element={<RequiredAuth>  <UpadateTask /> </RequiredAuth>  }/>
+        <Route path="/update/:id" element={  <UpadateTask />   }/>
         <Route path="/admin" element={<RequiredAuth> <AdminDashboard /> </RequiredAuth>  }></Route>
         <Route path="/user" element={ <RequiredAuth> <Userdashboard /> </RequiredAuth>  }></Route>
       </Routes>

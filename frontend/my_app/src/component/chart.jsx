@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 
 const Chart = () => {
   const chartRef = useRef(null);

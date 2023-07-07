@@ -8,9 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import UpadateTask from '../component/UpdateTask';
 
 const Home = () => {
-  
+  const [disabled, setDisabled] = useState(true)
   let task = useSelector((store) => store.task)
     console.log(task)
+
+    const [data,setData]=useState(task)
  
   const dispatch = useDispatch()
   const navigate=useNavigate()
@@ -30,7 +32,7 @@ const Home = () => {
     dispatch(getTaskData())
     
 
-  }, [])
+  }, [data])
 
 
   return (
@@ -65,8 +67,8 @@ const Home = () => {
                   <td>{el.due_date}</td>
                   <td>{el.status}</td>
                   <td>{el.assigned_user}</td>
-                  <td onClick={()=>handleEdit(el._id)}>{  <FaEdit />}</td>
-                  <td onClick={()=>handleDelete(el)}>{< RiDeleteBinLine />}</td>
+                  <td  onClick={()=>handleEdit(el._id)} disabled={true}>{  <FaEdit />}</td>
+                  <td onClick={()=>handleDelete(el)} disabled={true}>{< RiDeleteBinLine />}</td>
                 </tr>
                 )
                 

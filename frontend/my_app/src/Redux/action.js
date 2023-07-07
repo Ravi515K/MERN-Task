@@ -54,6 +54,7 @@ export const taskUpdate = (id,data)=>(dispatch)=>{
     })
     .then((res)=>{
         console.log(res)
+        // window.location.reload()
         dispatch({type:types.Task_Update_Data,payload:res});
     }).catch((err)=>{
         console.log(err)

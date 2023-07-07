@@ -28,7 +28,7 @@ const TaskCreate = () => {
             },
             body:JSON.stringify(task)
             
-           }).then((res)=>res.json())
+           })
            .then((res)=>{
                 console.log(res)
                 navigate("/")

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Navbar from '../component/navbar'
-import axios from 'axios'
 import { taskUpdate } from '../Redux/action'
 import { useDispatch } from 'react-redux'
 import {  useNavigate, useParams } from 'react-router-dom'

@@ -10,8 +10,6 @@ const UserLogin = () => {
    // console.log("loc",location)
     const from = location.state ? location.state : null;
   
-    const email="admin@gmail.com";
-    const password="adminPass123";
 
     const navigate = useNavigate()
     const dispatch=useDispatch()
@@ -57,6 +55,7 @@ const UserLogin = () => {
 
                         }).catch(err=>{
                             console.log(err)
+                            alert("Wrong Credential")
                         })
                 
            
