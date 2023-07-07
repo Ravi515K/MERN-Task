@@ -1,7 +1,8 @@
 import axios from 'axios'
 import * as types from './actionType'
 
-const token=JSON.parse(localStorage.getItem('user_detail'))
+const Data=JSON.parse(localStorage.getItem('user_detail'))
+console.log("user",Data)
 export const AdminLogIn = ()=>(dispatch)=>{
      dispatch({type:types.Admin_Login})
 
@@ -29,7 +30,7 @@ export const taskDelete = (data)=>(dispatch)=>{
     console.log("data,action",data._id)
     axios.delete(`http://localhost:8080/task/delete/${data._id}`,{
         headers:{
-            'Authorization':token.token
+            'Authorization':Data.token
         }
     })
     .then(res => {
@@ -49,12 +50,12 @@ export const taskUpdate = (id,data)=>(dispatch)=>{
         headers:{
            
             'Content-Type': 'application/json',
-            "Authorization":token.token,
+            "Authorization":Data.token,
         }
     })
     .then((res)=>{
         console.log(res)
-        // window.location.reload()
+         window.location.reload()
         dispatch({type:types.Task_Update_Data,payload:res});
     }).catch((err)=>{
         console.log(err)

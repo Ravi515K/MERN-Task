@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import UpadateTask from '../component/UpdateTask';
 
 const Home = () => {
+  const Data=JSON.parse(localStorage.getItem('user_detail'))
   const [disabled, setDisabled] = useState(true)
   let task = useSelector((store) => store.task)
     console.log(task)
 
-    const [data,setData]=useState(task)
+  const [data,setData]=useState(task)
  
   const dispatch = useDispatch()
   const navigate=useNavigate()
@@ -23,9 +24,14 @@ const Home = () => {
   }
 
   const handleDelete=(data)=>{
-    
-  //  console.log(data)
-     dispatch(taskDelete(data))
+    if(Data.Role=='Admin'){
+      dispatch(taskDelete(data))
+    }else{
+      alert("Unable to Delete from This page")
+      navigate("/user")
+    }
+ 
+   
 
   }
   useEffect(() => {
@@ -42,7 +48,7 @@ const Home = () => {
 
       <div id="table">
 
-        <table class="table table-sm">
+        <table className="table table-sm">
           
           <thead>
             <tr className="table-warning">
@@ -60,15 +66,15 @@ const Home = () => {
             {
               task?.map((el, i) => {
                 return (
-                  <tr key={el._id} class="table-success ">
+                  <tr key={el._id} className="table-success ">
                   <th scope="row">{i+1}</th>
                   <td>{el.title}</td>
                   <td>{el.description}</td>
                   <td>{el.due_date}</td>
                   <td>{el.status}</td>
                   <td>{el.assigned_user}</td>
-                  <td  onClick={()=>handleEdit(el._id)} disabled={true}>{  <FaEdit />}</td>
-                  <td onClick={()=>handleDelete(el)} disabled={true}>{< RiDeleteBinLine />}</td>
+                  <td  onClick={()=>handleEdit(el._id)} >{  <FaEdit />}</td>
+                  <td onClick={()=>handleDelete(el)} >{< RiDeleteBinLine />}</td>
                 </tr>
                 )
                 

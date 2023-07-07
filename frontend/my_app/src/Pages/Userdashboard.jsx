@@ -7,9 +7,16 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom';
 
 const Userdashboard = () => {
-  
+  let userDetail=JSON.parse(localStorage.getItem('user_detail'))
+  let Role=userDetail.Role
   let task = useSelector((store) => store.task)
-    console.log(task)
+   // console.log(task)
+
+   let data=task.filter((el)=>{
+          return el.assigned_user==userDetail.name
+    })
+    console.log(data)
+   let x= Role=="Admin"?task:data
  
   const dispatch = useDispatch()
   const navigate=useNavigate()
@@ -53,7 +60,7 @@ const Userdashboard = () => {
           </thead>
           <tbody>
             {
-              task?.map((el, i) => {
+              x?.map((el, i) => {
                 return (
                   <tr key={el._id} class="table-success ">
                   <th scope="row">{i+1}</th>
