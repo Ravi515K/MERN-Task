@@ -41,15 +41,15 @@ userRouter.post("/register",async(req,res)=>{
  // User Login
 
 userRouter.post("/login",async(req,res)=>{
-    console.log("req", req.body.password);
+  //  console.log("req", req.body);
     const { email, password } = req.body;
 
     try{
             const checkUser = await userModel.find({email:email})
-            const pass = checkUser[0].password;
-                    //  console.log("checobj",checkUser)
+            
             if(checkUser.length>0){
-                bcrypt.compare(password, pass,  (err, result) =>{
+                bcrypt.compare(password, checkUser[0].password,  (err, result) =>{
+                    
                     if (err) {
                          res.send("Please enter valid credentils");
                     }
