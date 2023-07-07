@@ -34,20 +34,14 @@ const UserLogin = () => {
                         .then(res=>{
                             console.log(res,"reson")
                            
-                           if(res.data){
+                           if(res.data.token){
                             
-                                alert("Login Succesfully")
+                                 alert("Login Succesfully")
                                 localStorage.setItem("user_detail",JSON.stringify(res.data))
 
                                 dispatch(UserLogIn(res.data.token))
-                              
-                                if (from) {
-                                    
-                                    navigate(from.pathname);
-                                } else {
-                                    
-                                    navigate("/");
-                                }
+                              navigate("/")
+                               
                                 
                             }else{
                                 alert("Wrong Credential")

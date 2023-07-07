@@ -7,8 +7,9 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom';
 import UpadateTask from '../component/UpdateTask';
 
-const Home = () => {
+ const Home = () => {
   const Data=JSON.parse(localStorage.getItem('user_detail'))
+  console.log("Data",Data)
   const [disabled, setDisabled] = useState(true)
   let task = useSelector((store) => store.task)
     console.log(task)
@@ -19,17 +20,35 @@ const Home = () => {
   const navigate=useNavigate()
  
   const handleEdit=(id)=>{
-     navigate(`update/${id}`)
-  
-  }
-
-  const handleDelete=(data)=>{
-    if(Data.Role=='Admin'){
-      dispatch(taskDelete(data))
+     
+     if(Data==null){
+      navigate("/login")
     }else{
-      alert("Unable to Delete from This page")
-      navigate("/user")
+
+        if(Data.Role=='Admin'){
+          navigate(`update/${id}`)
+        }
+        else{
+          alert("Unable to Delete from This page")
+          navigate("/user")
+        }
     }
+  }
+  const handleDelete=(data)=>{
+    if(Data==null){
+      navigate("/login")
+    }else{
+
+        if(Data.Role=='Admin'){
+          dispatch(taskDelete(data))
+        }
+        else{
+          alert("Unable to Delete from This page")
+          navigate("/user")
+        }
+
+    }
+    
  
    
 
@@ -87,5 +106,6 @@ const Home = () => {
       </div>
     </div>
   )
-}
-export default Home
+ 
+ }
+ export default Home;
