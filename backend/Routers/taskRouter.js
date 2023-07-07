@@ -42,7 +42,7 @@ taskRouter.patch("/update/:id",authenticate, async(req,res)=>{
     const payload=req.body
     console.log("pay",ID)
     try {
-        let taskUpdated=await taskModel.findOneAndUpdate({_id:ID,payload})
+        let taskUpdated=await taskModel.findOneAndUpdate({_id:ID},payload)
         res.send(taskUpdated)
     } catch (error) {
         res.send({"err":error,"msg":"task not updated"})
