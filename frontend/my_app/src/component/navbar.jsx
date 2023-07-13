@@ -5,7 +5,7 @@ const Navbar = () => {
 
     let data = JSON.parse(localStorage.getItem('user_detail'))
 
-    const handleLogOut = () =>{
+    const handleLogOut = () => {
         localStorage.removeItem('user_detail')
     }
 
@@ -26,9 +26,13 @@ const Navbar = () => {
                                         <li className="nav-item">
                                             <Link className="nav-link active mx-3 border border-success text-white bg-success opacity-3" aria-current="page" to="/task">Create Task</Link>
                                         </li>
-                                        <li className="nav-item">
-                                            < Link className="nav-link active mx-3 border border-success text-white bg-success opacity-3" aria-current="page" to="/user">User Dashboard</Link>
-                                        </li>
+                                        {
+                                            data?.Role === "User" &&
+                                            <li className="nav-item">
+                                                < Link className="nav-link active mx-3 border border-success text-white bg-success opacity-3" aria-current="page" to="/user">User Dashboard</Link>
+                                            </li>
+                                        }
+
                                         {
                                             data?.Role === "Admin" &&
                                             <li className="nav-item">
