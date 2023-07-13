@@ -46,14 +46,11 @@ userRouter.post("/login",async(req,res)=>{
 
     try{
             const checkUser = await userModel.find({email:email})
-            
+            console.log("check",checkUser)
             if(checkUser.length>0){
                 bcrypt.compare(password, checkUser[0].password,  (err, result) =>{
-                    
-                    if (err) {
-                         res.send("Please enter valid credentils");
-                    }
-                    else {
+                   
+                    if (result) {
                         const token = jwt.sign(
                             {
                                 name: checkUser[0].name,
@@ -69,7 +66,10 @@ userRouter.post("/login",async(req,res)=>{
                             "token": token
                         }
                          res.send(p);
-                         
+                        
+                    }
+                    else {
+                        res.send("Please enter valid credentils");  
                     }
                 });
             }else{
@@ -81,7 +81,7 @@ userRouter.post("/login",async(req,res)=>{
     }catch(err)
     {
         res.send({"msg":"Please Enter valid Credentials","err":err.message})
-        console.log("wrong")
+       
     }
    
 })
